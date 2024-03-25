@@ -1,13 +1,20 @@
 use anchor_lang::prelude::*;
+use instructions::*;
 
-declare_id!("8FBdK1WvpGhnkgMVspcD1ocdZdVJhkYTBUGqtkSUvG1z");
+pub mod instructions;
+pub mod states;
+declare_id!("D1gMCgf8gHdUNDmpUfe1fHuUQci2JJFCw7CGv184hNMv");
 
 #[program]
-pub mod vm_doc_input {
+pub mod doc_input {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        Ok(())
+    pub fn vote<'c: 'info, 'info>(
+        ctx: Context<'_, '_, 'c, 'info, Vote<'info>>,
+        vote: InputVote,
+        vec_coef: Vec<u8>,
+    ) -> Result<()> {
+        instructions::vote(ctx, vote, vec_coef)
     }
 }
 
